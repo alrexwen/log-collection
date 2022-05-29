@@ -49,7 +49,7 @@
 </template>
 
 <script>
-  import { getTime } from '@/utils/getTime'
+  // import { getTime } from '@/utils/getTime'
   // const List = [
   //   {
   //     "requestID": 1,
@@ -64,7 +64,8 @@
     name: "info",
     data(){
       return{
-        List: {
+        List:[],
+        data: {
           "requestID": 1,
           "originIp": "8.8.8.8",
           "originPort": "1234",
@@ -86,12 +87,12 @@
         this.axios({
           method: 'get',
           dataType: 'JSONP',
-          url: '/api/request/' + this.$route.params.id
+          url: '/api/api/request/' + this.$route.params.id
         }).then(res => {
-          this.List = res.data
+          this.List = res.data.data
           this.otherData = res.otherData
-          // console.log(this.List)
-          this.List.createTime = getTime(JSON.stringify(this.List.createTime), 'yyyy-MM-dd hh:mm:ss');
+          console.log(this.List)
+          // this.List.createTime = getTime(JSON.stringify(this.List.createTime), 'yyyy-MM-dd hh:mm:ss');
           // this.tag = this.List.label_id
           // {
           //   this.axios({

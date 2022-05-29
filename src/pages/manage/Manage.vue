@@ -6,104 +6,27 @@
                     <a-row >
                         <a-col :md="8" :sm="24" >
                             <a-form-item
-                                    label="主机名"
+                                    label="ID"
                                     :labelCol="{span: 5}"
                                     :wrapperCol="{span: 18, offset: 1}"
                             >
-                                <a-input placeholder="请输入" />
+                                <a-input placeholder="请输入" v-model="form.ID"/>
                             </a-form-item>
                         </a-col>
-                        <a-col :md="8" :sm="24" >
-                            <a-form-item
-                                    label="设备类型"
-                                    :labelCol="{span: 5}"
-                                    :wrapperCol="{span: 18, offset: 1}"
-                            >
-                                <a-input placeholder="请输入" />
-                            </a-form-item>
-                        </a-col>
+<!--                        <a-col :md="8" :sm="24" >-->
+<!--                            <a-form-item-->
+<!--                                    label="设备类型"-->
+<!--                                    :labelCol="{span: 5}"-->
+<!--                                    :wrapperCol="{span: 18, offset: 1}"-->
+<!--                            >-->
+<!--                                <a-input placeholder="请输入" />-->
+<!--                            </a-form-item>-->
+<!--                        </a-col>-->
                     </a-row>
-                    <!--                        <a-row v-if="advanced">-->
-                    <!--                        <a-form-item label="设备状态">-->
-                    <!--                            <a-switch v-model="form.delivery" />-->
-                    <!--                        </a-form-item>-->
-                    <!--                    </a-row>-->
-                    <!--                        <p>日志等级设置-->
-                    <!--                            <a-tooltip title="设置报警数量，达到该数量之后对日志进行分类">-->
-                    <!--                                <a-icon type="question-circle-o" />-->
-                    <!--                            </a-tooltip>-->
-                    <!--                        </p>-->
-                    <!--                        <a-row v-if="advanced">-->
-                    <!--                        <a-col :md="8" :sm="24" >-->
-                    <!--                            <a-form-item-->
-                    <!--                                    :label-col="labelCol"-->
-                    <!--                                    :wrapper-col="wrapperCol"-->
-                    <!--                                    label="INFO"-->
-                    <!--                                    :validate-status="number.validateStatus"-->
-                    <!--                            >-->
-                    <!--                                <a-input-number :min="8" :max="12" :value="number.value" @change="handleNumberChange" />-->
-                    <!--                            </a-form-item>-->
-                    <!--                        </a-col>-->
-                    <!--                            <a-col :md="8" :sm="24" >-->
-                    <!--                            <a-form-item-->
-                    <!--                                    :label-col="labelCol"-->
-                    <!--                                    :wrapper-col="wrapperCol"-->
-                    <!--                                    label="ERROR"-->
-                    <!--                                    :validate-status="number.validateStatus"-->
-                    <!--                            >-->
-                    <!--                                <a-input-number :min="8" :max="12" :value="number.value" @change="handleNumberChange" />-->
-                    <!--                            </a-form-item>-->
-                    <!--                            </a-col>-->
-                    <!--                            <a-col :md="8" :sm="24" >-->
-                    <!--                            <a-form-item-->
-                    <!--                                    :label-col="labelCol"-->
-                    <!--                                    :wrapper-col="wrapperCol"-->
-                    <!--                                    label="WARN"-->
-                    <!--                                    :validate-status="number.validateStatus"-->
-                    <!--                            >-->
-                    <!--                                <a-input-number :min="8" :max="12" :value="number.value" @change="handleNumberChange" />-->
-                    <!--                            </a-form-item>-->
-                    <!--                            </a-col>-->
-                    <!--                            <a-col :md="8" :sm="24" >-->
-                    <!--                            <a-form-item-->
-                    <!--                                    :label-col="labelCol"-->
-                    <!--                                    :wrapper-col="wrapperCol"-->
-                    <!--                                    label="DEBUG"-->
-                    <!--                                    :validate-status="number.validateStatus"-->
-                    <!--                            >-->
-                    <!--                                <a-input-number :min="8" :max="12" :value="number.value" @change="handleNumberChange" />-->
-                    <!--                            </a-form-item>-->
-                    <!--                            </a-col>-->
-                    <!--                        </a-row>-->
-                    <!--                    <a-row v-if="advanced">-->
-                    <!--                        <a-col :md="8" :sm="24" >-->
-                    <!--                            <a-form-item label="时间间隔">-->
-                    <!--                                <a-input v-model="form.name" />-->
-                    <!--                            </a-form-item>-->
-                    <!--                        </a-col>-->
-                    <!--                        <a-col :md="8" :sm="24" >-->
-                    <!--                            <a-form-item label="备注">-->
-                    <!--                                <a-input v-model="form.desc" type="textarea" />-->
-                    <!--                            </a-form-item>-->
-                    <!--                        </a-col>-->
 
-                    <!--                    </a-row>-->
                 </div>
                 <span style="float: right; margin-top: 3px;">
-          <a-button type="primary">查询</a-button>
-                    <!--          <a-button style="margin-left: 8px"  @click="showModal">新建</a-button>-->
-<!-- <a-button style="margin-right: 10px"  @click="showModal">-->
-<!--                        新建-->
-<!--                    </a-button>-->
-<!--                    <a-modal-->
-<!--                            title="Title"-->
-<!--                            :visible="visible"-->
-<!--                            :confirm-loading="confirmLoading"-->
-<!--                            @ok="handleOk"-->
-<!--                            @cancel="handleCancel"-->
-<!--                    >-->
-<!--                       <modal></modal>-->
-<!--                    </a-modal>-->
+          <a-button type="primary" @click="sreach">查询</a-button>
                      <a-button type="primary" >
                          <router-link to="/manage/new" > 新建</router-link>
     </a-button>
@@ -114,7 +37,7 @@
         <div>
             <standard-table
                     :columns="columns"
-                    :dataSource="dataSource"
+                    :dataSource="List"
                     :selectedRows.sync="selectedRows"
             >
                 <div slot="description" slot-scope="{text}">
@@ -146,6 +69,10 @@
       title: '主机名',
       dataIndex: "title",
       scopedSlots: { customRender: 'name' }
+    },
+    {
+      title: 'debug',
+      dataIndex: "debugCount"
     },
     {
       title: 'info',
@@ -203,6 +130,7 @@
         labelCol: { span: 4 },
         wrapperCol: { span: 14 },
         form: {
+          ID:'',
           name: '',
           region: undefined,
           date1: undefined,
@@ -221,12 +149,23 @@
 
     },
     methods: {
+      sreach(){
+        this.axios({
+          method: 'get',
+          dataType: 'JSONP',
+          url: '/api/api/warnManagement/'+this.form.ID,
+        }).then(res => {
+          this.List = [res.data.data]
+          console.log(this.List)
+        })
+        console.log(this.form.ID)
+      },
 
       getdate() {
         this.axios({
           method: 'get',
           dataType: 'JSONP',
-          url: '/api/warnManagement/'
+          url: '/api/api/warnManagement/'
         }).then(res => {
           this.List = res.data.data
           console.log(this.List)

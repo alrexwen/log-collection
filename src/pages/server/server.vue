@@ -1,5 +1,5 @@
 <template>
-    <a-list item-layout="vertical" size="large" :pagination="pagination" :data-source="listData">
+    <a-list item-layout="vertical" size="large"  :data-source="List">
         <a-list-item slot="renderItem" key="item.title" slot-scope="item">
             <img
                     slot="extra"
@@ -65,12 +65,8 @@
     data() {
       return {
         listData,
-        pagination: {
-          onChange: page => {
-            console.log(page);
-          },
-          pageSize: 3,
-        },
+        List:[],
+
         actions: [
           { type: 'star-o', text: '156' },
           { type: 'like-o', text: '156' },
@@ -87,7 +83,7 @@
           this.axios({
             method: 'get',
             dataType: 'JSONP',
-            url: '/api/app/'
+            url: '/api/api/app/'
           }).then(res => {
             this.List = res.data.data
             console.log(this.List)

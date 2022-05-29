@@ -35,12 +35,12 @@
 
             <standard-table
                     :columns="columns"
-                    :dataSource="dataSource"
+                    :dataSource="List"
                     :selectedRows.sync="selectedRows"
-
+                    :row-key="record=>record.warnId"
             >
-                <div slot="description" slot-scope="{text}">
-                    {{text}}
+                <div slot="description" slot-scope="{text,record}">
+                    <a @click="chack(record)">{{text}}</a>
                 </div>
                 <div slot="action">
 <!--                     slot-scope="{text, record}">-->
@@ -62,25 +62,16 @@
 </template>
 
 <script>
-  import { getTime } from '@/utils/getTime'
+  // import { getTime } from '@/utils/getTime'
   import StandardTable from '@/components/table/StandardTable'
   const columns = [
     {
       title: 'ID',
       dataIndex: "warnId"
     },
-    // {
-    //   title: '标题',
-    //   dataIndex: 'description',
-    //   // scopedSlots: { customRender: 'description' }
-    // },
-    // {
-    //   title: '接收者',
-    //   dataIndex: 'description',
-    // },
     {
       title: '错误数量',
-      dataIndex: "count",
+      dataIndex: "errorCount",
     },{
       title: '服务IP',
       dataIndex: "serverIp",
@@ -92,6 +83,7 @@
     {
       title: '描述',
       dataIndex: 'description',
+      scopedSlots: { customRender: 'description' }
     },
     {
       title: '时间',
@@ -132,7 +124,9 @@
         advanced: true,
         columns: columns,
         dataSource: dataSource,
-        selectedRows: []
+        selectedRows: [],
+        List:[],
+        Lists:[]
       }
     },
     authorize: {
@@ -147,36 +141,35 @@
         this.advanced = !this.advanced
       },
       chack(List) {
-        //  const id = this.$route.params.List.asset_id;
-        this.$router.push('/assets/' + List.warnManagementId + '/info')
+        //  const id = this.$route.params.List.asset_id;/info/details
+        this.$router.push('/info/' + List.warnId + '/details')
         // console.log(List.asset_id)
       },
       getdate() {
         this.axios({
-          method: 'get',
-          dataType: 'JSONP',
-          url: '/api/warn/'
-        }).then(res => {
-          this.Lists = res.data.data
-          console.log(this.Lists)
-        })
+        method: 'get',
+        dataType: 'JSONP',
+        url: '/api/api/warnManagement'
+      }).then(res => {
+        this.data = res.data
+        this.Lists = res.data.data
+      })
         this.axios({
           method: 'get',
           dataType: 'JSONP',
-          url: '/api/warnManagement'
+          url: '/api/api/warn/'
         }).then(res => {
-          this.data = res.data
           this.List = res.data.data
-          //  console.log(this.List)
           for (let i = 0; i < this.List.length; i++) {
             // this.List[i].key = this.List[i].serial_id;
-            this.List[i].create_time = getTime(JSON.stringify(this.List[i].create_time), 'yyyy-MM-dd hh:mm:ss');
+            // this.List[i].create_time = getTime(JSON.stringify(this.List[i].create_time), 'yyyy-MM-dd hh:mm:ss');
             for (let j = 0; j < this.Lists.length; j++)
               if (this.Lists[j].warnManagementId === this.List[i].warnManagementId) {
-                this.List[i].tags = this.Lists[j].label_name
+                this.List[i].errorCount = this.Lists[j].errorCount
               }
           }
         })
+
         this.data = this.List
       },
     }

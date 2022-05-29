@@ -35,3 +35,57 @@
         </a-descriptions-item>
     </a-descriptions>
 </template>
+<script>
+  // import { getTime } from '@/utils/getTime'
+  // const List = [
+  //   {
+  //     "requestID": 1,
+  //     "originIp": "8.8.8.8",
+  //     "originPort": "1234",
+  //     "originLocation": "美国 蒙大拿州",
+  //     "requestContent": "www.fw.com/adaw.  {\"status\":true,\"code\":0,\"message\":null,\"data\":[{\"keyId\":1,\"key\":\"2Q2OPuV33pTdRg0GUvnpgg==\",\"deprecateTime\":\"2023-03-14T13:54:08\",\"abandonTime\":\"2024-03-14T13:54:11\",\"createTime\":\"2022-03-14T13:54:14\"}],\"otherData\":{}}",
+  //     "createTime": "2022-04-21T11:16:42"
+  //   }
+  //   ]
+  export default {
+    name: "info",
+    data(){
+      return{
+        List:[],
+        data: {
+          "requestID": 1,
+          "originIp": "8.8.8.8",
+          "originPort": "1234",
+          "originLocation": "美国 蒙大拿州",
+          "requestContent": "www.fw.com/adaw.  {\"status\":true,\"code\":0,\"message\":null,\"" +
+            "data\":[{\"keyId\":1,\"key\":\"2Q2OPuV33pTdRg0GUvnpgg==\",\"deprecateTime\":\"2023-03-14T13:54:08\",\"abandonTime\":\"2024-03-14T13:54:11\",\"createTime\":\"2022-03-14T13:54:14\"}]," +
+            "\"otherData\":{}}",
+          "createTime": "2022-04-21 11:16:42"
+        },
+        tag:[],
+        otherData:''
+      }
+    },
+    mounted() {
+      this.update();
+    },
+    methods: {
+      update() {
+        this.axios({
+          method: 'get',
+          dataType: 'JSONP',
+          url: '/api/api/warn/' + this.$route.params.id
+        }).then(res => {
+          this.List = res.data.data
+          this.otherData = res.otherData
+          console.log(this.List)
+
+        })
+      },
+    }
+  }
+</script>
+
+<style scoped>
+
+</style>

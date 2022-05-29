@@ -43,7 +43,7 @@ const options = {
           component: () => import('@/pages/query/Journal'),
         },
         {
-          path: '/query/info',
+          path: '/query/:id/info',
           name: '详情',
           meta: {
             invisible:'true'
@@ -67,7 +67,7 @@ const options = {
           component: () => import('@/pages/Info/Info'),
         },
         {
-          path: '/info/details',
+          path: '/info/:id/details',
           name: '报警详情',
           meta: {
             invisible:'true'

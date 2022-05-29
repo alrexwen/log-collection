@@ -1,60 +1,141 @@
 <template>
     <a-form-model :model="form" :label-col="labelCol" :wrapper-col="wrapperCol">
-        <a-form-model-item label="主机名">
-            <a-input v-model="form.name" />
+        <a-form-model-item label="名称">
+            <a-input v-model="form.title" />
         </a-form-model-item>
-        <a-form-model-item label="设备类型">
-            <a-select v-model="form.region" placeholder="please select your zone">
-                <a-select-option value="shanghai">
-                    Zone one
-                </a-select-option>
-                <a-select-option value="beijing">
-                    Zone two
-                </a-select-option>
-            </a-select>
-        </a-form-model-item>
+<!--        <a-form-model-item label="设备类型">-->
+<!--            <a-select v-model="form.region" placeholder="please select your zone">-->
+<!--                <a-select-option value="shanghai">-->
+<!--                    Zone one-->
+<!--                </a-select-option>-->
+<!--                <a-select-option value="beijing">-->
+<!--                    Zone two-->
+<!--                </a-select-option>-->
+<!--            </a-select>-->
+<!--        </a-form-model-item>-->
 
-        <a-form-model-item label="设备状态">
-            <a-switch v-model="form.delivery" />
-        </a-form-model-item>
-    <a-form-model-item label="日志等级设置">
-            <a-tooltip title="设置报警数量，达到该数量之后对日志进行分类">
+<!--        <a-form-model-item label="设备状态">-->
+<!--            <a-switch v-model="form.delivery" />-->
+<!--        </a-form-model-item>-->
+    <a-form-model-item label="等级设置">
+            <a-tooltip title="设置数量，达到该数量之后进行分类">
                 <a-icon type="question-circle-o" />
             </a-tooltip>
     </a-form-model-item>
-        <a-form-item
-                :label-col="labelCol"
-                :wrapper-col="wrapperCol"
-                label="INFO"
-                :validate-status="number.validateStatus"
-        >
-            <a-input-number :min="8" :max="12" :value="number.value" @change="handleNumberChange" />
-        </a-form-item>
-        <a-form-item
-                :label-col="labelCol"
-                :wrapper-col="wrapperCol"
-                label="ERROR"
-                :validate-status="number.validateStatus"
-        >
-            <a-input-number :min="8" :max="12" :value="number.value" @change="handleNumberChange" />
-        </a-form-item>
-        <a-form-item
-                :label-col="labelCol"
-                :wrapper-col="wrapperCol"
-                label="WARN"
-                :validate-status="number.validateStatus"
-        >
-            <a-input-number :min="8" :max="12" :value="number.value" @change="handleNumberChange" />
-        </a-form-item>
-        <a-form-item
-                :label-col="labelCol"
-                :wrapper-col="wrapperCol"
-                label="DEBUG"
-                :validate-status="number.validateStatus"
-        >
-            <a-input-number :min="8" :max="12" :value="number.value" @change="handleNumberChange" />
-        </a-form-item>
-        <a-form-model-item label="Activity form">
+        <a-tabs default-active-key="1">
+            <a-tab-pane key="1" tab="危急">
+
+                        <a-form-item
+                                label="DEBUG"
+                        >
+                            <a-input-number   v-model="form.debugCount" />
+                        </a-form-item>
+                        <a-form-item
+                                label="INFO"
+                        >
+                            <a-input-number  v-model="form.infoCount"  />
+                        </a-form-item>
+                        <a-form-item
+                                label="ERROR"
+                        >
+                            <a-input-number   v-model="form.errorCount" />
+                        </a-form-item>
+                        <a-form-item
+                                label="WARN"
+                        >
+                            <a-input-number  v-model="form.warnCount" />
+                        </a-form-item>
+
+                        <a-form-item
+                                label="CRITICAL"
+                        >
+                            <a-input-number   v-model="form.criticalCount" />
+                        </a-form-item>
+            </a-tab-pane>
+            <a-tab-pane key="2" tab="故障" force-render>
+                <a-form-item
+                        label="DEBUG"
+                >
+                    <a-input-number   v-model="form.debugCount" />
+                </a-form-item>
+                <a-form-item
+                        label="INFO"
+                >
+                    <a-input-number  v-model="form.infoCount"  />
+                </a-form-item>
+                <a-form-item
+                        label="ERROR"
+                >
+                    <a-input-number   v-model="form.errorCount" />
+                </a-form-item>
+                <a-form-item
+                        label="WARN"
+                >
+                    <a-input-number  v-model="form.warnCount" />
+                </a-form-item>
+
+                <a-form-item
+                        label="CRITICAL"
+                >
+                    <a-input-number   v-model="form.criticalCount" />
+                </a-form-item>
+            </a-tab-pane>
+            <a-tab-pane key="3" tab="关注">
+                <a-form-item
+                        label="DEBUG"
+                >
+                    <a-input-number   v-model="form.debugCount" />
+                </a-form-item>
+                <a-form-item
+                        label="INFO"
+                >
+                    <a-input-number  v-model="form.infoCount"  />
+                </a-form-item>
+                <a-form-item
+                        label="ERROR"
+                >
+                    <a-input-number   v-model="form.errorCount" />
+                </a-form-item>
+                <a-form-item
+                        label="WARN"
+                >
+                    <a-input-number  v-model="form.warnCount" />
+                </a-form-item>
+
+                <a-form-item
+                        label="CRITICAL"
+                >
+                    <a-input-number   v-model="form.criticalCount" />
+                </a-form-item>
+            </a-tab-pane>
+        </a-tabs>
+<!--        <a-form-item-->
+<!--                label="DEBUG"-->
+<!--        >-->
+<!--            <a-input-number   v-model="form.debugCount" />-->
+<!--        </a-form-item>-->
+<!--        <a-form-item-->
+<!--                label="INFO"-->
+<!--        >-->
+<!--            <a-input-number  v-model="form.infoCount"  />-->
+<!--        </a-form-item>-->
+<!--        <a-form-item-->
+<!--                label="ERROR"-->
+<!--        >-->
+<!--            <a-input-number   v-model="form.errorCount" />-->
+<!--        </a-form-item>-->
+<!--        <a-form-item-->
+<!--                label="WARN"-->
+<!--        >-->
+<!--            <a-input-number  v-model="form.warnCount" />-->
+<!--        </a-form-item>-->
+
+<!--        <a-form-item-->
+<!--                label="CRITICAL"-->
+<!--        >-->
+<!--            <a-input-number   v-model="form.criticalCount" />-->
+<!--        </a-form-item>-->
+        <a-form-model-item label="备注">
             <a-input v-model="form.desc" type="textarea" />
         </a-form-model-item>
         <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
@@ -68,33 +149,22 @@
     </a-form-model>
 </template>
 <script>
-  function validatePrimeNumber(number) {
-    if (number === 11) {
-      return {
-        validateStatus: 'success',
-        errorMsg: null,
-      };
-    }
-    return {
-      validateStatus: 'error',
-      errorMsg: 'The prime between 8 and 12 is 11!',
-    };
-  }
+  // eslint-disable-next-line no-unused-vars
+  import formList from './components/formList'
   export default {
     data() {
       return {
-        number: {
-          value: 11,
-        },
         labelCol: { span: 4 },
         wrapperCol: { span: 14 },
+        components:{
+          formList
+        },
         form: {
-          name: '',
-          region: undefined,
-          date1: undefined,
-          delivery: false,
-          type: [],
-          resource: '',
+          criticalCount:'',
+          debugCount:'',
+          errorCount:'',
+          infoCount:'',
+          warnCount:'',
           desc: '',
         },
       };
@@ -102,13 +172,17 @@
     methods: {
       onSubmit() {
         console.log('submit!', this.form);
+        this.axios({
+          method: 'post',
+          data:this.form,
+          dataType: 'JSONP',
+          url: '/api/api/warnManagement/'
+        }).then(res => {
+          this.List = res.data.data
+          console.log(this.List)
+        })
       },
-      handleNumberChange(value) {
-        this.number = {
-          ...validatePrimeNumber(value),
-          value,
-        };
-      },
+
     },
   };
 </script>

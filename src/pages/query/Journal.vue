@@ -91,14 +91,18 @@
         <div>
             <standard-table
                     :columns="columns"
-                    :dataSource="dataSource"
+                    :dataSource="List"
                     :selectedRows.sync="selectedRows"
-                    :row-key="record=>record.requestID"
-            >
-                <div slot="content" slot-scope="{text}">
-                   <a @click="chack()">{{text}}</a>
+                    :row-key="record=>record.logID"
+                   >
+                <div slot="content" slot-scope="{text,record}">
+                   <a @click="chack(record)">{{text}}</a>
                 </div>
-
+<!--                <a slot="content" slot-scope="text,record"-->
+<!--                   @click="chack(record)"-->
+<!--                >-->
+<!--                    {{ text }}-->
+<!--                </a>-->
             </standard-table>
         </div>
     </a-card>
@@ -109,7 +113,7 @@
   const columns = [
     {
       title: '日志编号',
-      dataIndex: "appID"
+      dataIndex: "logID"
     },
     {
       title: '应用名称',
@@ -195,6 +199,8 @@
         dataSource: dataSource,
         selectedRows: [],
         List:[],
+        Lists:[],
+        data:[],
       }
     },
     authorize: {
@@ -209,39 +215,41 @@
         this.advanced = !this.advanced
       },
       // chack(List){
-      chack(){
+      chack(List){
         //  const id = this.$route.params.List.asset_id;
-        // this.$router.push('/query/'+List.requestID+'/info')
-        this.$router.push('/query/info')
-        // console.log(List.asset_id)
+        this.$router.push('/query/'+List.logID+'/info')
+        // this.$router.push('/query/info')
+        // console.log(List)
       },
       getdate() {
+
         this.axios({
           method: 'get',
           dataType: 'JSONP',
-          url: '/api/log/'
+          url: '/api/api/app'
+        }).then(res => {
+          this.data = res.data
+          this.Lists = res.data.data
+           // console.log(res.data,1)
+
+        this.axios({
+          method: 'get',
+          dataType: 'JSONP',
+          url: '/api/api/log/'
         }).then(res => {
           this.List = res.data.data
           console.log(this.List)
+          for (let i = 0; i < this.List.length; i++) {
+            // this.List[i].key = this.List[i].serial_id;
+            // this.List[i].create_time = getTime(JSON.stringify(this.List[i].create_time), 'yyyy-MM-dd hh:mm:ss');
+            for (let j = 0; j < this.Lists.length; j++)
+              if (this.Lists[j].appID === this.List[i].appID) {
+                this.List[i].appName = this.Lists[j].appName
+              }
+          }
         })
-        // this.axios({
-        //   method: 'get',
-        //   dataType: 'JSONP',
-        //   url: '/api/asset'
-        // }).then(res => {
-        //   this.data = res.data
-        //   this.List = res.data.data
-        //   //  console.log(this.List)
-        //   for (let i = 0; i < this.List.length; i++) {
-        //     // this.List[i].key = this.List[i].serial_id;
-        //     this.List[i].create_time = getTime(JSON.stringify(this.List[i].create_time), 'yyyy-MM-dd hh:mm:ss');
-        //     for (let j = 0; j < this.Lists.length; j++)
-        //       if (this.Lists[j].asset_label_id === this.List[i].label_id) {
-        //         this.List[i].tags = this.Lists[j].label_name
-        //       }
-        //   }
-        // })
-        // this.data = this.List
+      })
+        this.data = this.List
       },
 
       handleMenuClick (e) {
