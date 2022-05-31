@@ -1,6 +1,5 @@
 <template>
 <div>
-
     <warnlist/>
 </div>
 </template>

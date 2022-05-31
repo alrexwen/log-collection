@@ -50,14 +50,14 @@ const options = {
           },
           component: ()=> import('@/pages/query/info')
         },
-        // {
-        //   path: 'error',
-        //   name: '错误统计',
-        //   // meta: {
-        //   //   icon: 'dashboard'
-        //   // },
-        //   component: () => import('@/pages/error/ErrorInfo'),
-        // },
+        {
+          path: '/report',
+          name: '报告',
+          meta: {
+            invisible:'true'
+          },
+          component: () => import('@/pages/report'),
+        },
         {
           path: 'info',
           name: '报警',

@@ -1,18 +1,12 @@
 <template>
-    <a-list item-layout="vertical" size="large"  :data-source="List">
-        <a-list-item slot="renderItem" key="item.title" slot-scope="item">
-            <img
-                    slot="extra"
-                    width="272"
-                    alt="logo"
-                    src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
-            />
+    <a-list item-layout="vertical" size="large"  :data-source="List" style="background-color: white">
+        <a-list-item slot="renderItem" key="item.title" slot-scope="item" style="margin-left: 5px">
             <a-list-item-meta >
                 <a slot="title" :href="item.href">{{ item.appName }}</a>
 
 <!--                <a-avatar slot="avatar" :src="item.avatar" />-->
             </a-list-item-meta>
-            <a> <router-link to="/server/info" >详情</router-link></a>
+<!--            <a> <router-link to="/server/info" >详情</router-link></a>-->
             <br/>
             <span>服务描述</span>
             <br/>

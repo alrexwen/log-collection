@@ -3,7 +3,7 @@
     <a-row style="margin-top: 0" :gutter="[24, 24]">
       <a-col :sm="24" :md="12" :xl="6">
 <!--        <chart-card :loading="loading" :title="$t('totalSales')" total="￥ 189,345">-->
-          <chart-card :loading="loading" :title="$t('错误数量')" total="189,345">
+          <chart-card :loading="loading" :title="$t('所有事件')" total="45">
 <!--            错误数量-->
           <a-tooltip :title="$t('introduce')" slot="action">
             <a-icon type="info-circle-o" />
@@ -12,96 +12,60 @@
             <trend style="margin-right: 16px" :term="$t('wow')" :percent="12" :is-increase="true" :scale="0" />
             <trend :term="$t('dod')" :target="100" :value="89" :scale="0" />
           </div>
-          <div slot="footer">{{$ta('日均错误量', 'p')}}<span> 234.56</span></div>
+<!--          <div slot="footer">{{$ta('日均错误量', 'p')}}<span> 234.56</span></div>-->
         </chart-card>
       </a-col>
       <a-col :sm="24" :md="12" :xl="6">
-        <chart-card :loading="loading" :title="$t('在线主机')" total="189,345">
+        <chart-card :loading="loading" :title="$t('Windows事件')" total="34">
           <a-tooltip :title="$t('introduce')" slot="action">
             <a-icon type="info-circle-o" />
           </a-tooltip>
           <div>
-            <mini-area />
+<!--            <mini-area />-->
           </div>
-          <div slot="footer">{{$ta('日均在线主机', 'p')}}<span> 123,4</span></div>
+<!--          <div slot="footer">{{$ta('Windows事件', 'p')}}<span> 23</span></div>-->
         </chart-card>
       </a-col>
       <a-col :sm="24" :md="12" :xl="6">
-        <chart-card :loading="loading" :title="$t('报警次数')" total=" 189,345">
+        <chart-card :loading="loading" :title="$t('报警次数')" total=" 25">
           <a-tooltip :title="$t('introduce')" slot="action">
             <a-icon type="info-circle-o" />
           </a-tooltip>
           <div>
+<!--              {{$t('日均报警次数')}} <span>6</span>-->
             <mini-bar />
           </div>
-          <div slot="footer">{{$t('日均报警次数')}} <span>60</span></div>
+<!--          <div slot="footer"></div>-->
         </chart-card>
       </a-col>
-      <a-col :sm="24" :md="12" :xl="6">
-        <chart-card :loading="loading" :title="$t('operating')" total="73%">
-          <a-tooltip :title="$t('introduce')" slot="action">
-            <a-icon type="info-circle-o" />
-          </a-tooltip>
-          <div>
-            <mini-progress target="90" percent="78" color="#13C2C2" height="8px"/>
-          </div>
-          <div slot="footer" style="white-space: nowrap;overflow: hidden">
-            <trend style="margin-right: 16px" :term="$t('wow')" :percent="12" :is-increase="true" :scale="0" />
-            <trend :term="$t('dod')" :target="100" :value="89" :scale="0" />
-          </div>
-        </chart-card>
-      </a-col>
+        <a-col :sm="24" :md="12" :xl="6" @click="getPrint">
+            <chart-card :loading="loading" >
+                <a-tooltip :title="$t('introduce')" slot="action">
+                    <a-icon type="info-circle-o" />
+                </a-tooltip>
+                <div>
+                    <h1>查看报告</h1>
+                    <!--              {{$t('日均报警次数')}} <span>6</span>-->
+<!--                    <mini-bar />-->
+                </div>
+            </chart-card>
+        </a-col>
     </a-row>
     <a-card :loading="loading" style="margin-top: 24px" :bordered="false" :body-style="{padding: '24px'}">
       <div class="salesCard">
         <a-tabs default-active-key="1" size="large" :tab-bar-style="{marginBottom: '24px', paddingLeft: '16px'}">
           <div class="extra-wrap" slot="tabBarExtraContent">
-            <div class="extra-item">
-              <a>{{$t('day')}}</a>
-              <a>{{$t('week')}}</a>
-              <a>{{$t('month')}}</a>
-              <a>{{$t('year')}}</a>
-            </div>
             <a-range-picker :style="{width: '256px'}"></a-range-picker>
           </div>
-          <a-tab-pane loading="true" :tab="$t('运行数据')" key="1">
+          <a-tab-pane loading="true" :tab="$t('日志趋势数据')" key="1" >
             <a-row>
-<!--              <a-col :xl="16" :lg="12" :md="12" :sm="24" :xs="24">-->
-                <bar :title="$ta('', 'p')" />
-<!--              </a-col>-->
-<!--              <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">-->
-<!--                <ranking-list :title="$ta('应用', 'p')" :list="rankList"/>-->
-<!--              </a-col>-->
+                <MiniArea :style="{height: '256px'}"/>
             </a-row>
           </a-tab-pane>
-          <a-tab-pane :tab="$t('错误统计')" key="2"><a-row>
-            <a-col :xl="16" :lg="12" :md="12" :sm="24" :xs="24">
-              <bar :title="$ta('报警主机', 'p')" />
-            </a-col>
-            <a-col :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
-              <ranking-list :title="$ta('报警排行', 'p')" :list="rankList"/>
-            </a-col>
-          </a-row></a-tab-pane>
         </a-tabs>
       </div>
     </a-card>
-    <a-row style="margin: 0 -12px">
-      <a-col style="padding: 0 12px" :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
-        <a-card :loading="loading" :bordered="false" style="margin-top: 24px" :title="$t('错误统计')">
-          <hot-search />
-        </a-card>
-      </a-col>
-      <a-col style="padding: 0 12px" :xl="12" :lg="24" :md="24" :sm="24" :xs="24">
-        <a-card :loading="loading" :bordered="false" style="margin-top: 24px;" :title="$t('报警占比')">
-          <sales-data />
-<!--          <a-radio-group slot="extra" style="margin: -12px 0">-->
-<!--            <a-radio-button value="a">{{$t('all')}}</a-radio-button>-->
-<!--            <a-radio-button value="b">{{$t('online')}}</a-radio-button>-->
-<!--            <a-radio-button value="c">{{$t('stores')}}</a-radio-button>-->
-<!--          </a-radio-group>-->
-        </a-card>
-      </a-col>
-    </a-row>
+
   </div>
 </template>
 
@@ -109,21 +73,14 @@
 import ChartCard from '../../../components/card/ChartCard'
 import MiniArea from '../../../components/chart/MiniArea'
 import MiniBar from '../../../components/chart/MiniBar'
-import MiniProgress from '../../../components/chart/MiniProgress'
-import Bar from '../../../components/chart/Bar'
-import RankingList from '../../../components/chart/RankingList'
-import HotSearch from './HotSearch'
-import SalesData from './SalesData'
+// import MiniProgress from '../../../components/chart/MiniProgress'
+// import Bar from '../../../components/chart/Bar'
+// import RankingList from '../../../components/chart/RankingList'
+// import HotSearch from './HotSearch'
+// import SalesData from './SalesData'
 import Trend from '../../../components/chart/Trend'
 
 const rankList = []
-
-for (let i = 0; i < 8; i++) {
-  rankList.push({
-    name: '桃源村' + i + '号店',
-    total: 1234.56 - i * 100
-  })
-}
 
 export default {
   name: 'Analysis',
@@ -137,9 +94,13 @@ export default {
   created() {
     setTimeout(() => this.loading = !this.loading, 1000)
   },
-  components: { HotSearch, MiniProgress, MiniBar, MiniArea, ChartCard,Trend,RankingList, Bar,SalesData,
+  components: {   MiniBar,  ChartCard,Trend, MiniArea
+  },
+  methods:{
+    getPrint(){
+      this.$router.push('/report')
+    }
   }
-    //
 }
 </script>
 

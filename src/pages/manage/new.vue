@@ -21,7 +21,7 @@
             <a-tooltip title="设置数量，达到该数量之后进行分类">
                 <a-icon type="question-circle-o" />
             </a-tooltip>
-    </a-form-model-item>
+
         <a-tabs default-active-key="1">
             <a-tab-pane key="1" tab="危急">
 
@@ -109,6 +109,7 @@
                 </a-form-item>
             </a-tab-pane>
         </a-tabs>
+    </a-form-model-item>
 <!--        <a-form-item-->
 <!--                label="DEBUG"-->
 <!--        >-->

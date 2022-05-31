@@ -38,7 +38,7 @@ const scale = [{
   dataKey: 'y',
   title: '时间',
   min: 1,
-  max: 22
+  max: 10
 }]
 
 export default {
@@ -48,7 +48,7 @@ export default {
       data,
       scale,
       tooltip,
-      height: 100
+      height: 250
     }
   }
 }

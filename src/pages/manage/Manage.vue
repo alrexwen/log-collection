@@ -66,9 +66,13 @@
       dataIndex: "warnManagementId"
     },
     {
-      title: '主机名',
+      title: '名称',
       dataIndex: "title",
       scopedSlots: { customRender: 'name' }
+    },
+    {
+      title: '严重程度',
+      dataIndex: "severity"
     },
     {
       title: 'debug',

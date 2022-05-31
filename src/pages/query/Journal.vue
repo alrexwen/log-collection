@@ -89,6 +89,7 @@
             </a-form>
         </div>
         <div>
+            <a-button type="primary" @click="exportData">导出文件</a-button>
             <standard-table
                     :columns="columns"
                     :dataSource="List"
@@ -110,6 +111,7 @@
 
 <script>
   import StandardTable from '@/components/table/StandardTable'
+  import XLSX from "xlsx";
   const columns = [
     {
       title: '日志编号',
@@ -252,11 +254,36 @@
         this.data = this.List
       },
 
-      handleMenuClick (e) {
-        if (e.key === 'delete') {
-          this.remove()
-        }
+      transData(columns, List) {
+        const obj = columns.reduce((acc, cur) => {
+          if (!acc.titles && !acc.keys) {
+            acc.titles = [];
+            acc.keys = [];
+          }
+          acc.titles.push(cur.title);
+          acc.keys.push(cur.dataIndex);
+          return acc;
+        }, {});
+        const tableBody = List.map(item => {
+          return obj.keys.map(key => item[key]);
+        });
+        return [ obj.titles, ...tableBody ];
+      },
+      exportData() {
+        const tableData = this.transData(
+          this.columns,
+          this.List
+        );
+        // 将一组 JS 数据数组转换为工作表
+        const ws = XLSX.utils.aoa_to_sheet(tableData);
+        // 创建 workbook
+        const wb = XLSX.utils.book_new();
+        // 将 工作表 添加到 workbook
+        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+        // 将 workbook 写入文件
+        XLSX.writeFile(wb, '日志.xlsx');
       }
+
     }
   }
 </script>
